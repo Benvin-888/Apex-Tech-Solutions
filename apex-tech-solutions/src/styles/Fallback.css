@@ -1,0 +1,179 @@
+/* 🌌 Fullscreen dark gradient background with red glow */
+.fallback-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, #180000, #000000);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* 🧱 Center box with subtle borders and glowing bottom edge */
+.fallback-box {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 14px;
+  padding: 50px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -20px 80px rgba(255, 0, 0, 0.25) inset,
+              0 0 30px rgba(255, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.fallback-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 -20px 100px rgba(255, 0, 0, 0.35) inset;
+}
+
+/* 🪲 Icon */
+.bug-icon {
+  opacity: 0.8;
+  margin-bottom: 15px;
+  color: #ff4d4d;
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* 🔥 Icon subtle pulse animation */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Headings & Text */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.fallback-subtitle {
+  font-size: 1.1rem;
+  color: #bbb;
+  margin-bottom: 25px;
+}
+
+.contact-text {
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+/* 🔗 Social links */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.social-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.7;
+  position: relative;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.social-link:hover {
+  opacity: 1;
+  color: #ff4d4d;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .fallback-box {
+    padding: 35px 25px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .socials {
+    gap: 15px;
+  }
+}
+/* 🌌 Fullscreen dark gradient background with red glow */
+.fallback-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, #180000, #000000);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+/* 🧱 Center box with subtle borders and glowing bottom edge */
+.fallback-box {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 14px;
+  padding: 50px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -20px 80px rgba(255, 0, 0, 0.25) inset,
+              0 0 30px rgba(255, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+.fallback-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 -20px 100px rgba(255, 0, 0, 0.35) inset;
+}
+/* 🪲 Icon */
+.bug-icon {
+  opacity: 0.8;
+  margin-bottom: 15px;
+  color: #ff4d4d;
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+/* 🔥 Icon subtle pulse animation */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+/* Headings & Text */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.fallback-subtitle {
+  font-size: 1.1rem;
+  color: #bbb;
+  margin-bottom: 25px;
+}
+.contact-text {
+  color: #ddd;
+  margin-bottom: 20px;
+}
+/* 🔗 Social links */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+.social-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.7;
+  position: relative;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+.social-link:hover {
+  opacity: 1;
+  color: #ff4d4d;
+}
+/* Responsive */
+@media (max-width: 600px) {
+  .fallback-box {
+    padding: 35px 25px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .socials {
+    gap: 15px;
+  }
+}

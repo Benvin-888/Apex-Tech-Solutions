@@ -1,0 +1,254 @@
+/* ✨ Modern Animated Background with Dynamic Color Cycle */
+.landing-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #081c24, #0f2027, #203a43, #2c5364);
+  background-size: 300% 300%;
+  animation: gradientShift 15s ease infinite alternate, colorCycle 10s linear infinite;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: background 1s ease;
+}
+
+/* 🎨 Background Color Change Every Second */
+@keyframes colorCycle {
+  0%   { background: linear-gradient(135deg, #081c24, #0f2027, #203a43, #2c5364); }
+  10%  { background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); }
+  20%  { background: linear-gradient(135deg, #000428, #004e92); }
+  30%  { background: linear-gradient(135deg, #2b5876, #4e4376); }
+  40%  { background: linear-gradient(135deg, #134e5e, #71b280); }
+  50%  { background: linear-gradient(135deg, #1f4037, #99f2c8); }
+  60%  { background: linear-gradient(135deg, #8360c3, #2ebf91); }
+  70%  { background: linear-gradient(135deg, #000046, #1cb5e0); }
+  80%  { background: linear-gradient(135deg, #f7971e, #ffd200); }
+  90%  { background: linear-gradient(135deg, #11998e, #38ef7d); }
+  100% { background: linear-gradient(135deg, #141e30, #243b55); }
+}
+
+/* 🎞️ Moving gradient animation */
+@keyframes gradientShift {
+  0% { background-position: left top; }
+  100% { background-position: right bottom; }
+}
+
+/* 💡 Ambient Glow Effect */
+.landing-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.15), transparent 80%);
+  transform: translate(-50%, -50%);
+  filter: blur(100px);
+  z-index: 0;
+  animation: pulseGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { opacity: 0.3; }
+  to { opacity: 0.8; }
+}
+
+/* 🪩 Logo with depth & glow */
+.landing-logo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+  object-fit: cover;
+  transition: all 0.6s ease;
+  z-index: 2;
+}
+
+.landing-logo:hover {
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 0 50px rgba(0, 212, 255, 0.9);
+}
+
+/* 🧠 Modern Title */
+.landing-title {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #00d4ff, #00ffb3, #00bfff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: textFlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes textFlow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* 🧭 Subtitle */
+.landing-subtitle {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  line-height: 1.7;
+  color: #e0f7ff;
+  z-index: 2;
+}
+
+/* 🌐 Floating Particles */
+@keyframes float {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-20px); }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 212, 255, 0.4);
+  animation: float 4s ease-in-out infinite alternate;
+  filter: blur(1.5px);
+  z-index: 1;
+}
+
+/* Additional floating particles */
+.particle:nth-child(1) {
+  width: 15px;
+  height: 15px;
+  top: 20%;
+  left: 15%;
+  animation-duration: 5s;
+}
+
+.particle:nth-child(2) {
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 80%;
+  animation-duration: 3s;
+}
+
+/* =========================== */
+/* ⚙️ Loader Animation Section */
+/* =========================== */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  --color: hsl(185, 100%, 80%);
+  --animation: 2s ease-in-out infinite;
+  z-index: 3;
+}
+
+.loader .circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: solid 2px var(--color);
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: transparent;
+  animation: circle-keys var(--animation);
+}
+
+.loader .circle .dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color);
+  animation: dot-keys var(--animation);
+}
+
+.loader .circle .outline {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  animation: outline-keys var(--animation);
+}
+
+/* Delay for smooth looping */
+.circle:nth-child(2) { animation-delay: 0.3s; }
+.circle:nth-child(3) { animation-delay: 0.6s; }
+.circle:nth-child(4) { animation-delay: 0.9s; }
+.circle:nth-child(5) { animation-delay: 1.2s; }
+
+.circle:nth-child(2) .dot { animation-delay: 0.3s; }
+.circle:nth-child(3) .dot { animation-delay: 0.6s; }
+.circle:nth-child(4) .dot { animation-delay: 0.9s; }
+.circle:nth-child(5) .dot { animation-delay: 1.2s; }
+
+.circle:nth-child(1) .outline { animation-delay: 0.9s; }
+.circle:nth-child(2) .outline { animation-delay: 1.2s; }
+.circle:nth-child(3) .outline { animation-delay: 1.5s; }
+.circle:nth-child(4) .outline { animation-delay: 1.8s; }
+.circle:nth-child(5) .outline { animation-delay: 2.1s; }
+
+/* Loader Animations */
+@keyframes circle-keys {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dot-keys {
+  0% { transform: scale(1); }
+  50% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+@keyframes outline-keys {
+  0% {
+    transform: scale(0);
+    outline: solid 20px var(--color);
+    outline-offset: 0;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    outline: solid 0 transparent;
+    outline-offset: 20px;
+    opacity: 0;
+  }
+}
+
+/* ✨ Fade-out Animation for Loader */
+.fade-out {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .landing-title { font-size: 2.2rem; }
+  .landing-subtitle { font-size: 1rem; margin-bottom: 35px; }
+  .landing-logo { width: 100px; height: 100px; }
+  .loader { margin-top: 15px; }
+}
+
+@media (max-width: 480px) {
+  .landing-title { font-size: 1.8rem; }
+  .landing-subtitle { font-size: 0.9rem; margin-bottom: 30px; }
+  .landing-logo { width: 80px; height: 80px; }
+  .loader { margin-top: 10px; }
+}
+
+/* End of Landingpage.css */
