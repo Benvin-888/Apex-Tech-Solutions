@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { useNavigate } from "react-router-dom";
 
-
-
-
-// Modern icons
+// Modern icons (keep your existing imports)
 import { 
   FaGlobe, FaLaptopCode, FaMobileAlt, FaPalette, FaBriefcase, FaPenNib,
   FaChevronDown, FaRocket, FaLightbulb, FaCode, FaPaintBrush, FaServer,
   FaTwitter, FaFacebook, FaInstagram, FaLinkedin, FaGithub, FaDribbble,
-  FaEnvelope, FaPhone, FaMapMarkerAlt, FaArrowRight
+  FaEnvelope, FaPhone, FaMapMarkerAlt, FaArrowRight, FaBars, FaTimes
 } from "react-icons/fa";
 
-// Enhanced animations
+// Enhanced animations (keep your existing animations)
 const float = keyframes`
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(5deg); }
@@ -100,6 +97,13 @@ const glassMorphism = css`
   border-radius: 20px;
 `;
 
+// Breakpoints for responsive design
+const breakpoints = {
+  mobile: '768px',
+  tablet: '1024px',
+  smallMobile: '480px'
+};
+
 // Styled Components
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -109,7 +113,7 @@ const PageContainer = styled.div`
   overflow-x: hidden;
 `;
 
-// Enhanced Navigation
+// Enhanced Navigation - Made fully responsive
 const Navbar = styled.nav`
   position: fixed;
   top: 0;
@@ -135,6 +139,10 @@ const NavContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 0 1rem;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -142,6 +150,10 @@ const LogoContainer = styled.div`
   align-items: center;
   gap: 1rem;
   cursor: pointer;
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    gap: 0.5rem;
+  }
 `;
 
 const LogoImage = styled.img`
@@ -155,6 +167,11 @@ const LogoImage = styled.img`
   &:hover {
     transform: scale(1.1);
     border-color: #240b36;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    height: 40px;
+    width: 40px;
   }
 `;
 
@@ -182,6 +199,14 @@ const LogoText = styled.h1`
   &:hover::after {
     transform: scaleX(1);
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const NavLinks = styled.div`
@@ -189,16 +214,19 @@ const NavLinks = styled.div`
   gap: 3rem;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${breakpoints.mobile}) {
     display: ${props => props.mobileMenu ? 'flex' : 'none'};
-    position: absolute;
+    position: fixed;
     top: 100%;
     left: 0;
     width: 100%;
     background: rgba(15, 12, 41, 0.98);
+    backdrop-filter: blur(20px);
     flex-direction: column;
     padding: 2rem;
     gap: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 `;
 
@@ -232,6 +260,17 @@ const NavLink = styled.a`
   &:hover::before {
     width: 80%;
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    
+    &:hover {
+      background: rgba(195, 20, 50, 0.2);
+    }
+  }
 `;
 
 const MobileMenuButton = styled.button`
@@ -242,13 +281,18 @@ const MobileMenuButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
+  transition: all 0.3s ease;
 
-  @media (max-width: 768px) {
+  &:hover {
+    color: #c31432;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
     display: block;
   }
 `;
 
-// Enhanced Hero Section with new gradient
+// Enhanced Hero Section with improved mobile responsiveness
 const HeroSection = styled.section`
   min-height: 100vh;
   display: flex;
@@ -259,6 +303,12 @@ const HeroSection = styled.section`
   margin-top: 80px;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 0 1rem;
+    margin-top: 70px;
+    min-height: 90vh;
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -290,6 +340,10 @@ const FloatingElements = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    display: none; /* Hide floating elements on mobile for better performance */
+  }
 `;
 
 const FloatingElement = styled.div`
@@ -321,6 +375,23 @@ const FloatingElement = styled.div`
     height: 60px;
     animation-duration: 20s;
   }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    &:nth-child(1) {
+      width: 60px;
+      height: 60px;
+    }
+    
+    &:nth-child(2) {
+      width: 80px;
+      height: 80px;
+    }
+    
+    &:nth-child(3) {
+      width: 40px;
+      height: 40px;
+    }
+  }
 `;
 
 const HeroContent = styled.div`
@@ -335,8 +406,17 @@ const HeroTitle = styled.h1`
   margin-bottom: 1.5rem;
   line-height: 1.1;
   
-  @media (max-width: 768px) {
-    font-size: 3rem;
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 3.5rem;
+  }
+  
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    font-size: 2rem;
   }
 `;
 
@@ -357,8 +437,14 @@ const TypingText = styled.div`
   white-space: nowrap;
   animation: ${typing} 3.5s steps(40, end), ${blink} 0.75s step-end infinite;
 
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1.3rem;
+    border-right: 2px solid #c31432;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -368,6 +454,11 @@ const CtaButtons = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 3rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    gap: 1rem;
+    margin-top: 2rem;
+  }
 `;
 
 const PrimaryButton = styled.button`
@@ -405,6 +496,18 @@ const PrimaryButton = styled.button`
   &:hover::before {
     left: 100%;
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const SecondaryButton = styled(PrimaryButton)`
@@ -418,16 +521,24 @@ const SecondaryButton = styled(PrimaryButton)`
   }
 `;
 
-// Enhanced Services Section
+// Enhanced Services Section with responsive grid
 const ServicesSection = styled.section`
   padding: 8rem 0;
   position: relative;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 4rem 0;
+  }
 `;
 
 const SectionContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 0 1rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -439,8 +550,16 @@ const SectionTitle = styled.h2`
   -webkit-text-fill-color: transparent;
   background-clip: text;
 
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    font-size: 1.8rem;
   }
 `;
 
@@ -453,6 +572,16 @@ const SectionSubtitle = styled.p`
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    font-size: 1rem;
+  }
 `;
 
 const ServicesGrid = styled.div`
@@ -460,6 +589,17 @@ const ServicesGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2.5rem;
   margin-top: 4rem;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
 `;
 
 const ServiceCard = styled.div`
@@ -493,6 +633,20 @@ const ServiceCard = styled.div`
     height: 4px;
     ${modernGradient}
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 2rem 1.5rem;
+    min-height: 320px;
+    
+    &:hover {
+      transform: translateY(-10px) scale(1.01);
+    }
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    padding: 1.5rem 1rem;
+    min-height: 280px;
+  }
 `;
 
 const ServiceIconWrapper = styled.div`
@@ -517,6 +671,18 @@ const ServiceIconWrapper = styled.div`
     width: 50px;
     height: 50px;
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 80px;
+    height: 80px;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
 `;
 
 const ServiceTitle = styled.h3`
@@ -524,6 +690,15 @@ const ServiceTitle = styled.h3`
   margin-bottom: 1.5rem;
   color: white;
   font-weight: 700;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    font-size: 1.3rem;
+  }
 `;
 
 const ServiceDescription = styled.p`
@@ -531,12 +706,22 @@ const ServiceDescription = styled.p`
   line-height: 1.7;
   font-size: 1.1rem;
   margin-bottom: 2rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
 `;
 
-// Stats Section
+// Stats Section with responsive grid
 const StatsSection = styled.section`
   padding: 6rem 0;
   background: rgba(0, 0, 0, 0.2);
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 4rem 0;
+  }
 `;
 
 const StatsGrid = styled.div`
@@ -544,6 +729,16 @@ const StatsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 3rem;
   margin-top: 3rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const StatCard = styled.div`
@@ -556,6 +751,14 @@ const StatCard = styled.div`
   &:hover {
     transform: translateY(-10px);
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 1.5rem;
+    
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
 `;
 
 const StatNumber = styled.div`
@@ -566,15 +769,23 @@ const StatNumber = styled.div`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 1rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 2.5rem;
+  }
 `;
 
 const StatLabel = styled.div`
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.8);
   font-weight: 600;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1rem;
+  }
 `;
 
-// Modern Social Media Icons
+// Modern Social Media Icons with responsive layout
 const SocialMediaSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -637,13 +848,28 @@ const SocialIcon = styled.a`
     height: 20px;
     z-index: 1;
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 45px;
+    height: 45px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
 `;
 
-// Enhanced Footer
+// Enhanced Footer with responsive grid
 const Footer = styled.footer`
   background: rgba(0, 0, 0, 0.4);
   padding: 4rem 0 2rem;
   margin-top: 4rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 3rem 0 2rem;
+    margin-top: 2rem;
+  }
 `;
 
 const FooterContainer = styled(SectionContainer)`
@@ -651,12 +877,22 @@ const FooterContainer = styled(SectionContainer)`
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 4rem;
   margin-bottom: 3rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    gap: 3rem;
+    grid-template-columns: 1fr;
+  }
 `;
 
 const FooterSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    gap: 1rem;
+    text-align: center;
+  }
 `;
 
 const FooterLogo = styled.div`
@@ -664,6 +900,12 @@ const FooterLogo = styled.div`
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 const FooterLogoImage = styled.img`
@@ -672,6 +914,11 @@ const FooterLogoImage = styled.img`
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #c31432;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    height: 50px;
+    width: 50px;
+  }
 `;
 
 const FooterTitle = styled.h4`
@@ -679,12 +926,20 @@ const FooterTitle = styled.h4`
   margin-bottom: 1rem;
   color: white;
   font-weight: 700;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1.1rem;
+  }
 `;
 
 const FooterText = styled.p`
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   font-size: 1rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 0.9rem;
+  }
 `;
 
 const FooterLink = styled.a`
@@ -700,6 +955,11 @@ const FooterLink = styled.a`
     color: #c31432;
     transform: translateX(5px);
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    justify-content: center;
+    font-size: 0.9rem;
+  }
 `;
 
 const FooterBottom = styled.div`
@@ -711,9 +971,14 @@ const FooterBottom = styled.div`
 const Copyright = styled.p`
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 0.8rem;
+    padding: 0 1rem;
+  }
 `;
 
-// Scroll to Top Button
+// Scroll to Top Button with responsive positioning
 const ScrollToTop = styled.button`
   position: fixed;
   bottom: 30px;
@@ -736,6 +1001,27 @@ const ScrollToTop = styled.button`
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(195, 20, 50, 0.3);
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+`;
+
+// Overlay for mobile menu
+const MobileOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  display: ${props => props.show ? 'block' : 'none'};
 `;
 
 // React Component
@@ -755,11 +1041,19 @@ const Homepage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenu(!mobileMenu);
+  };
+
+  const handleNavClick = (path) => {
+    navigate(path);
+    setMobileMenu(false);
   };
 
   const services = [
@@ -813,23 +1107,26 @@ const navigate = useNavigate();
 
   return (
     <PageContainer>
+      {/* Mobile Menu Overlay */}
+      <MobileOverlay show={mobileMenu} onClick={() => setMobileMenu(false)} />
+      
       {/* Navigation Bar */}
       <Navbar scrolled={scrolled}>
         <NavContainer>
-          <LogoContainer onClick={() => navigate('home')}>
+          <LogoContainer onClick={() => navigate('/')}>
             <LogoImage src="/Logo/Logo.jpg" alt="Apex Tech Solutions" />
             <LogoText>Apex Tech Solutions</LogoText>
           </LogoContainer>
           
           <NavLinks mobileMenu={mobileMenu}>
-            <NavLink onClick={() => navigate('/Home')}>Home</NavLink>
-            <NavLink onClick={() => navigate('/Packages')}>Services</NavLink>
-            <NavLink onClick={() => navigate('/Aboutus')}>Aboutus</NavLink>
-            <NavLink onClick={() => navigate('#contact')}>Contact</NavLink>
+            <NavLink onClick={() => handleNavClick('/')}>Home</NavLink>
+            <NavLink onClick={() => handleNavClick('/Packages')}>Services</NavLink>
+            <NavLink onClick={() => handleNavClick('/Aboutus')}>About Us</NavLink>
+            <NavLink onClick={() => handleNavClick('/contact')}>Contact</NavLink>
           </NavLinks>
 
-          <MobileMenuButton onClick={() => setMobileMenu(!mobileMenu)}>
-            ☰
+          <MobileMenuButton onClick={toggleMobileMenu}>
+            {mobileMenu ? <FaTimes /> : <FaBars />}
           </MobileMenuButton>
         </NavContainer>
       </Navbar>
@@ -852,10 +1149,10 @@ const navigate = useNavigate();
             Building the future, one pixel at a time
           </TypingText>
           <CtaButtons>
-            <PrimaryButton onClick={() => navigate('/Packages')}>
+            <PrimaryButton onClick={() => handleNavClick('/Packages')}>
               Explore Services <FaArrowRight />
             </PrimaryButton>
-            <SecondaryButton onClick={() => navigate('contact')}>
+            <SecondaryButton onClick={() => handleNavClick('/contact')}>
               Get In Touch
             </SecondaryButton>
           </CtaButtons>
@@ -911,7 +1208,7 @@ const navigate = useNavigate();
         <FooterContainer>
           <FooterSection>
             <FooterLogo>
-              <FooterLogoImage src="/Logo/Logo.jpg" alt="Apex Tech Solutions" /> <FooterLogo alt="Apex Tech Solutions" />
+              <FooterLogoImage src="/Logo/Logo.jpg" alt="Apex Tech Solutions" />
               <FooterTitle>Apex Tech Solutions</FooterTitle>
             </FooterLogo>
             <FooterText>
@@ -938,23 +1235,23 @@ const navigate = useNavigate();
           
           <FooterSection>
             <FooterTitle>Quick Links</FooterTitle>
-            <FooterLink onClick={() => navigate('Homepage')}>
+            <FooterLink onClick={() => handleNavClick('/')}>
               <FaArrowRight size={12} /> Home
             </FooterLink>
-            <FooterLink onClick={() => navigate('/Packages')}>
+            <FooterLink onClick={() => handleNavClick('/Packages')}>
               <FaArrowRight size={12} /> Services
             </FooterLink>
-            <FooterLink onClick={() => navigate('/AboutUs')}>
-              <FaArrowRight size={12} /> Aboutus
+            <FooterLink onClick={() => handleNavClick('/Aboutus')}>
+              <FaArrowRight size={12} /> About Us
             </FooterLink>
           </FooterSection>
           
           <FooterSection>
             <FooterTitle>Contact Info</FooterTitle>
-            <FooterLink href="mailto:info@apextech.com">
-              <FaEnvelope /> info@apextech.com
+            <FooterLink href="mailto:apex.tech.solutions888@gmail.com">
+              <FaEnvelope /> apex.tech.solutions888@gmail.com
             </FooterLink>
-            <FooterLink href="tel:+15551234567">
+            <FooterLink href="tel:+254718922875">
               <FaPhone /> +254 (718) 922-875
             </FooterLink>
             <FooterLink>
